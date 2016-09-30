@@ -9,7 +9,7 @@ var express = require('express')
   , _ = require('lodash')
 ;
 
-//var DBHOST   = "https://129.152.129.94";
+//const DBHOST   = "https://129.152.129.94";
 const DBHOST   = "https://ANKIDB";
 const restURI  = '/apex/pdb1/anki/analytics';
 const LAP      = "/laptime/:demozone"
@@ -49,11 +49,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // REST stuff - BEGIN
-router.get(LAP, function(req, res) {
-  var demozone = req.params.demozone;
-  var payload = req.body;
-  dbClient.get(restURI + LAP.replace(':demozone', demozone), data, (err, req, res, data) => {
-    res.send(data);
+router.get(LAP, function(_req, _res) {
+  var demozone = _req.params.demozone;
+  dbClient.get(restURI + LAP.replace(':demozone', demozone), (err, req, res, data) => {
+    _res.send(data);
   });
 });
 
