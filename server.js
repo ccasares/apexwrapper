@@ -43,7 +43,7 @@ process.on('SIGINT', function() {
 // Main handlers registration - END
 
 // REST engine initial setup
-const PORT = 9998;
+const PORT = 9997;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
