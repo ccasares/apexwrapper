@@ -62,6 +62,6 @@ app.use(restURI, router);
 server.listen(PORT, () => {
   _.each(router.stack, (r) => {
     // We take just the first element in router.stack.route.methods[] as we assume one HTTP VERB at most per URI
-    console.log("'" + _.keys(r.route.methods)[0].toUpperCase() + "' method available at https://localhost:" + PORT + restURI + r.route.path);
+    console.log("'" + _.keys(r.route.methods)[0].toUpperCase() + "' method available at http://localhost:" + PORT + restURI + r.route.path);
   });
 });
