@@ -9,10 +9,10 @@ var express = require('express')
   , _ = require('lodash')
 ;
 
-//const DBHOST   = "https://129.152.129.94";
-const DBHOST   = "https://ANKIDB";
-const restURI  = '/apex/pdb1/anki/analytics';
-const LAP      = "/laptime/:demozone"
+const DBHOST   = "https://129.152.129.94";
+//const DBHOST   = "https://ANKIDB";
+const VERB = 'GET';
+const restURI  = '/apex/pdb1/anki';
 
 // Instantiate classes & servers
 var app    = express()
@@ -49,9 +49,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // REST stuff - BEGIN
-router.get(LAP, function(_req, _res) {
-  var demozone = _req.params.demozone;
-  dbClient.get(restURI + LAP.replace(':demozone', demozone), (err, req, res, data) => {
+router.use(function(_req, _res, next) {
+  if ( _req.method != VERB) {
+    _res.status(405).end();
+    return;
+  }
+  dbClient.get(restURI+_req.url, (err, req, res, data) => {
+    if (err) {
+      _res.status(err.statusCode).send(err.body);
+      return;
+    }
     _res.send(data);
   });
 });
@@ -61,7 +68,6 @@ app.use(restURI, router);
 
 server.listen(PORT, () => {
   _.each(router.stack, (r) => {
-    // We take just the first element in router.stack.route.methods[] as we assume one HTTP VERB at most per URI
-    console.log("'" + _.keys(r.route.methods)[0].toUpperCase() + "' method available at http://localhost:" + PORT + restURI + r.route.path);
+    console.log("Listening for any '%s' request at http://localhost:%s%s/*", VERB, PORT, restURI);
   });
 });
