@@ -11,7 +11,7 @@ var express = require('express')
 
 //const DBHOST   = "https://129.152.129.94";
 const DBHOST   = "https://ANKIDB";
-const VERB = 'GET';
+const VERB = ['GET','POST'];
 const restURI  = '/apex/pdb1';
 
 // Instantiate classes & servers
@@ -50,6 +50,7 @@ app.use(bodyParser.json());
 
 // REST stuff - BEGIN
 router.use(function(_req, _res, next) {
+  console.log(_find(VERB, _req.method));
   if ( _req.method != VERB) {
     _res.status(405).end();
     return;
