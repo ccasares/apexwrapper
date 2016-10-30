@@ -67,8 +67,15 @@ router.use(function(_req, _res, next) {
       _res.send(data);
     });
   } else if ( _req.method === POST) {
-    _res.type('json');
-    _res.send(JSON.stringify({result: 'OK'}));
+    dbClient.post(restURI+_req.url, (err, req, res, data) => {
+      if (err) {
+        console.log("Error from DB call: " + err.statusCode);
+        _res.status(err.statusCode).send(err.body);
+        return;
+      }
+      _res.type('json');
+      _res.send(data);
+    });
   }
 });
 
