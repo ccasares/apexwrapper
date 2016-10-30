@@ -77,6 +77,6 @@ app.use(restURI, router);
 
 server.listen(PORT, () => {
   _.each(router.stack, (r) => {
-    console.log("Listening for any '%s' request at http://localhost:%s%s/*", VERB, PORT, restURI);
+    console.log("Listening for any '%s' request at http://localhost:%s%s/*", ALLOWEDVERBS, PORT, restURI);
   });
 });
