@@ -9,10 +9,9 @@ var express = require('express')
   , _ = require('lodash')
 ;
 
-const DBHOST   = "https://129.152.129.94";
-//const DBHOST   = "https://ANKIDB";
+//const DBHOST   = "https://129.152.129.94";
+const DBHOST   = "https://ANKIDB";
 const VERB = 'GET';
-//const restURI  = '/apex/pdb1/anki';
 const restURI  = '/apex/pdb1';
 
 // Instantiate classes & servers
