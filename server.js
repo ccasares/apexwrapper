@@ -67,6 +67,9 @@ router.use(function(_req, _res, next) {
       _res.send(data);
     });
   } else if ( _req.method === POST) {
+
+    console.log(_req.body);
+
     dbClient.post(restURI+_req.url, _req.body, (err, req, res, data) => {
       if (err) {
         console.log("Error from DB call: " + err.statusCode);
