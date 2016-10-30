@@ -56,6 +56,7 @@ router.use(function(_req, _res, next) {
     _res.status(405).end();
     return;
   }
+  console.log(util.inspect(_req,true,null));
   if ( _req.method === GET) {
     dbClient.get(restURI+_req.url, (err, req, res, data) => {
       if (err) {
