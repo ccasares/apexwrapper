@@ -12,7 +12,8 @@ var express = require('express')
 const DBHOST   = "https://129.152.129.94";
 //const DBHOST   = "https://ANKIDB";
 const VERB = 'GET';
-const restURI  = '/apex/pdb1/anki';
+//const restURI  = '/apex/pdb1/anki';
+const restURI  = '/apex/pdb1';
 
 // Instantiate classes & servers
 var app    = express()
