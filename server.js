@@ -11,7 +11,9 @@ var express = require('express')
 
 //const DBHOST   = "https://129.152.129.94";
 const DBHOST   = "https://ANKIDB";
-const VERB = ['GET','POST'];
+const GET = 'GET';
+const POST = 'POST';
+const ALLOWEDVERBS = [GET,POST];
 const restURI  = '/apex/pdb1';
 
 // Instantiate classes & servers
@@ -50,21 +52,24 @@ app.use(bodyParser.json());
 
 // REST stuff - BEGIN
 router.use(function(_req, _res, next) {
-  console.log(_req.method);
-  console.log(_.includes(VERB, _req.method));
-  if ( _req.method != VERB) {
+  if (!_.includes(ALLOWEDVERBS, _req.method)) {
     _res.status(405).end();
     return;
   }
-  dbClient.get(restURI+_req.url, (err, req, res, data) => {
-    if (err) {
-      console.log("Error from DB call: " + err.statusCode);
-      _res.status(err.statusCode).send(err.body);
-      return;
-    }
+  if ( _req.method === GET) {
+    dbClient.get(restURI+_req.url, (err, req, res, data) => {
+      if (err) {
+        console.log("Error from DB call: " + err.statusCode);
+        _res.status(err.statusCode).send(err.body);
+        return;
+      }
+      _res.type('json');
+      _res.send(data);
+    });
+  } else if ( _req.method === POST) {
     _res.type('json');
-    _res.send(data);
-  });
+    _res.send(JSON.stringify({result: 'OK'}));
+  }
 });
 
 app.use(restURI, router);
