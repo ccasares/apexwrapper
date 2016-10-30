@@ -50,7 +50,8 @@ app.use(bodyParser.json());
 
 // REST stuff - BEGIN
 router.use(function(_req, _res, next) {
-  console.log(_.find(VERB, _req.method));
+  console.log(_req.method);
+  console.log(_.includes(VERB, _req.method));
   if ( _req.method != VERB) {
     _res.status(405).end();
     return;
