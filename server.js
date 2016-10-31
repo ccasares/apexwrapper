@@ -68,6 +68,7 @@ router.use(function(_req, _res, next) {
     });
   } else if ( _req.method === POST) {
 
+    console.log(restURI+_req.url);
     console.log(_req.body);
 
     dbClient.post(restURI+_req.url, _req.body, (err, req, res, data) => {
